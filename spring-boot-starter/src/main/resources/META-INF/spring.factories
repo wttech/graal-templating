@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.wttech.graal.templating.spring.javascript.JavascriptRendererAutoConfiguration

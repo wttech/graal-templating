@@ -1,0 +1,5 @@
+name: renderer
+version: '0.1.0'
+title: Graal JS Renderer
+nav:
+  - modules/ROOT/nav.adoc

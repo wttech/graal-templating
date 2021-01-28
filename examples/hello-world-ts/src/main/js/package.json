@@ -1,0 +1,33 @@
+{
+  "name": "graal-bridge-js-example",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "webpack-dev-server --open --no-inline",
+    "build:dev": "webpack --mode development",
+    "watch:dev": "webpack --mode development --watch",
+    "build:prod": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "contributors": [
+    {
+      "name": "Tomasz Krug",
+      "email": "tomasz.krug@gmail.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/core": "7.12.10",
+    "@babel/preset-env": "7.12.10",
+    "@babel/compat-data": "7.12.7",
+    "babel-loader": "8.0.6",
+    "file-loader": "5.1.0",
+    "ts-loader": "6.2.1",
+    "typescript": "3.8.3",
+    "webpack": "4.41.6",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.10.3"
+  },
+  "dependencies": {
+    "graal-bridge": "file:../../../../../templating/src/main/js/bridge"
+  }
+}

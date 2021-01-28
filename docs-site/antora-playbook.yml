@@ -1,0 +1,19 @@
+site:
+  title: Graal templating reference
+  url: https://docs.demo.com
+  start_page: renderer::index.adoc
+content:
+  sources:
+    - url: ../
+      branches:
+        - main
+      start_path: templating/src/main/docs/antora
+output:
+  dir: ./dist
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: ./ui
+runtime:
+  cache_dir: ./.cache/antora

@@ -1,0 +1,28 @@
+= Project setup
+:page-pagination:
+
+== Dependencies
+
+To start using JS Renderer just add it as a dependency.
+
+.build.gradle.kts
+[source,kotlin,subs="attributes+"]
+----
+dependencies {
+    implementation("io.wttech.graal.templating:templating:{page-version}")
+}
+----
+
+Maven
+
+.pom.xml
+[source,xml,subs="attributes+"]
+----
+<dependencies>
+  <dependency>
+    <groupId>io.wttech.graal.templating</groupId>
+    <artifactId>templating</artifactId>
+    <version>{page-version}</version>
+  </dependency>
+</dependencies>
+----

@@ -1,0 +1,42 @@
+= React
+:page-pagination:
+
+== General
+
+While you can integrate JS Renderer with React on your own there's already an npm package that can help you with that.
+
+== graal-bridge-react
+
+First add the `@wttech/graal-bridge-react` library to package.json.
+
+React is defined as a peer dependency so it's best to specify your own version of the framework in package.json.
+
+The example below shows how to register React components as parts of the final render function.
+
+.graal-bridge-react
+[source,jsx harmony]
+----
+import GraalBridge from 'graal-bridge-react';
+
+import DashboardComponent from './BashboardComponent.jsx';
+
+function HelloComponent(props) {
+  const name = props.name ? props.name : 'World';
+  return (
+    <span>Hello {name}!</span>
+  );
+}
+
+// create a registry of functions
+const templating = new GraalBridge();
+// register a view / component of ID hello
+templating.register('hello', HelloComponent);
+// register a view / component of ID helloWithObject
+templating.register('dashboard', DashboardComponent);
+// expose the render function as a global one
+templating.expose();
+----
+
+Parameters passed to JS Renderer will always be treated as a JSON string and will be parsed before passing the object as the props parameter to the registered component.
+
+It works both in Javascript and Typescript context.

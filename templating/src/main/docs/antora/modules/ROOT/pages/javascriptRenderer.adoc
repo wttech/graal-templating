@@ -1,0 +1,106 @@
+= Javascript renderer
+:page-pagination:
+
+== Renderer instantiation
+
+Example below shows how to create a renderer loading the script file from the classpath.
+
+.Configuring renderer
+[source,java]
+----
+public JavascriptRenderer create() {
+  return JavascriptRendererConfigurator.instance()
+      .objectMapper(new ObjectMapper())
+      .classpathScript("/public/bundle.js")
+      .buildDevelopment();
+}
+----
+
+With this the renderer is ready to be invoked within your code.
+
+== Usage
+
+When invoking the renderer you have to provide two parameters.
+
+First represents the ID of the component / view to render. This way a single script can contain logic for many different cases.
+
+Second parameter contains the view model passed to the script. It can either be a literal String, in which case it will be passed as it, or it can a Java object which will be automatically converted to a JSON string.
+
+.Invoking renderer
+[source,java]
+----
+public class ClientCode {
+
+    private final JavascriptRenderer renderer;
+
+    public Mono<String> renderHelloWorld() {
+      return renderer.render("hello", "Mitchell");
+      // Mono will emit value "<span>Hello Mitchell!</span>"
+    }
+
+    public Mono<String> renderWithCustomObject() {
+      HelloViewModel model = HelloViewModel.of("Mitchell");
+      // model will be transformed to JSON with ObjectMapper
+      return renderer.render("helloWithObject", model);
+    }
+
+}
+----
+
+== Script structure
+
+For Java code to be able to interact with Javascript code the script it must globally expose a function with the following signature.
+
+`render(viewName: string, props: string): string`
+
+* viewName - string identifying the component to render. The function should check this parameter and execute proper logic based on it.
+* props - string representing value passed from Java as parameters. In most cases it will be a JSON string which can be converted to JS object in your code.
+* returned value - string containing HTML markup
+
+Fortunately you don't have to remmeber all that as there are npm packages doing all the work for you.
+
+== graal-bridge
+
+First add the `@wttech/graal-bridge` library to package.json.
+
+Then use it in your script in the following way.
+
+.graal-bridge
+[source,javascript]
+----
+import GraalBridge from '@wttech/graal-bridge';
+
+// function treating props as a literal string
+function renderHelloWorld(props) {
+    const name = props ? props : 'World';
+    return "Hello " + name + "!";
+}
+
+// function treating props as a JSON string
+function renderWithJson(props) {
+    const parsed = JSON.parse(props);
+    const name = parsed.name ? parsed.name : 'World';
+    return "Hello " + name + "!";
+}
+
+// create a registry of functions
+const templating = new GraalBridge();
+// register a view / component of ID hello
+templating.register('hello', renderHelloWorld);
+// register a view / component of ID helloWithObject
+templating.register('helloWithObject', renderWithJson);
+// expose the render function as a global one
+templating.expose();
+----
+
+It works both in Javascript and Typescript context.
+
+== Development and production
+
+There are two special methods for configuring Javascript renderer for development and production purposes.
+
+`.buildProduction()` focuses on performance and should be used on the target environment where the script won't change between server restarts.
+
+`.buildDevelopment()` will create a renderer that will cache the script for 100ms (a single) and recompile the script only if it changes.
+These settings facilitate development but do not expect the best performance.
+

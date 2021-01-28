@@ -1,0 +1,35 @@
+{
+  "name": "@wttech/graal-bridge",
+  "description": "Javascript entrypoint for Graal integration",
+  "version": "0.1.0",
+  "main": "./dist/graal-bridge.js",
+  "types": "./dist/graal-bridge.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wttech/graal-templating.git"
+  },
+  "keywords": [
+    "graal",
+    "renderer"
+  ],
+  "contributors": [
+    {
+      "name": "Tomasz Krug",
+      "email": "tomasz.krug@gmail.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://wttech.github.io/graal-templating",
+  "devDependencies": {
+    "@types/node": "13.7.7",
+    "typescript": "3.8.3"
+  }
+}

@@ -1,0 +1,45 @@
+= Spring Boot integration
+:page-pagination:
+
+Spring Boot starter provides the following features:
+
+* `JavascriptRendererSpringConfigurator` bean for setting up a new JavascriptRenderer instance.
+* retrieving script source file from an external server using Spring WebClient
+
+To include JS Renderer library in your Spring Boot application add the the following dependency.
+
+.build.gradle.kts
+[source,kotlin,subs="attributes+"]
+----
+dependencies {
+    implementation("io.wttech.graal.templating:templating-spring-boot-starter:{page-version}")
+}
+----
+
+Maven
+
+.pom.xml
+[source,xml,subs="attributes+"]
+----
+<dependencies>
+  <dependency>
+    <groupId>io.wttech.graal.templating</groupId>
+    <artifactId>templating-spring-boot-starter</artifactId>
+    <version>{page-version}</version>
+  </dependency>
+</dependencies>
+----
+
+The example below shows how to configure renderer to read an external source file.
+
+[source,java]
+----
+  @Bean
+  JavascriptRenderer javascriptRenderer(JavascriptRendererSpringConfigurator configurator, WebClient webClient) {
+    return configurator
+        .externalScript(builder -> builder.webClient(webClient).uri(URI.create("http://localhost:3000/bundle.js")).build())
+        .buildDevelopment();
+  }
+----
+
+

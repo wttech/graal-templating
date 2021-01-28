@@ -1,0 +1,29 @@
+= Rapid development with Javascript
+:page-pagination:
+
+== General
+
+Javascript renderer can retrieve the script from the classpath as well as from an external server.
+
+We can use this feature together with `webpack` and `webpack-dev-server` to prepare a setup for rapid development of view logic.
+
+== Script development
+
+First let's define the Javascript renderer bean tailored for development.
+
+.SpringConfiguration.java
+[source,java]
+----
+@Bean
+  JavascriptRenderer javascriptRenderer(JavascriptRendererSpringConfigurator configurator, WebClient webClient) {
+    return configurator.externalScript(builder -> builder.webClient(webClient).uri(URI.create("http://localhost:3000/bundle.js")).build())
+        .buildDevelopment();
+  }
+----
+
+The second step is to setup webpack build and start the dev server.
+
+The server starting command should look like this: `webpack-dev-server --open --no-inline`. 
+`no-inline` parameter is important as otherwise `webpack` will inject not server side friendly code into the final JS bundle.
+
+The script will now be reloaded from webpack each time the JS renderer is invoked.

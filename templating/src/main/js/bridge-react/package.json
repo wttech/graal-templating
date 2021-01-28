@@ -1,0 +1,42 @@
+{
+  "name": "@wttech/graal-bridge-react",
+  "description": "React entrypoint for Graal integration",
+  "version": "0.1.0",
+  "main": "./dist/graal-bridge-react.js",
+  "types": "./dist/graal-bridge-react.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wttech/graal-templating.git"
+  },
+  "keywords": [
+    "graal",
+    "renderer",
+    "react"
+  ],
+  "contributors": [
+    {
+      "name": "Tomasz Krug",
+      "email": "tomasz.krug@gmail.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://wttech.github.com/graal-templating",
+  "peerDependencies": {
+    "react": ">= 16.1",
+    "react-dom": ">= 16.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "13.7.7",
+    "@types/react": "16.1.0",
+    "@types/react-dom": "16.0.0",
+    "typescript": "3.8.3"
+  }
+}
