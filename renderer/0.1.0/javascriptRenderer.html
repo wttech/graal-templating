@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Javascript renderer :: Graal templating reference</title>
+    <link rel="canonical" href="https://docs.demo.com/renderer/0.1.0/javascriptRenderer.html">
+    <link rel="prev" href="projectSetup.html">
+    <link rel="next" href="react.html">
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../_/css/site.css">
+<link rel="stylesheet" href="../../_/css/search.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://docs.demo.com">Graal templating reference</a>
+        <div class="navbar-item">
+          <input id="search-input" type="text" placeholder="Search docs">
+        </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="renderer" data-version="0.1.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Graal JS Renderer</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Intro</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="projectSetup.html">Project setup</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="javascriptRenderer.html">Javascript renderer</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="react.html">React</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="springBootIntegration.html">Spring Boot integration</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="javascriptRapidDevelopment.html">Rapid development with Javascript</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Graal JS Renderer</span>
+    <span class="version">0.1.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="index.html">Graal JS Renderer</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">0.1.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Graal JS Renderer</a></li>
+    <li><a href="javascriptRenderer.html">Javascript renderer</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/wttech/graal-templating/edit/main/templating/src/main/docs/antora/modules/ROOT/pages/javascriptRenderer.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Javascript renderer</h1>
+<div class="sect1">
+<h2 id="_renderer_instantiation"><a class="anchor" href="#_renderer_instantiation"></a>Renderer instantiation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Example below shows how to create a renderer loading the script file from the classpath.</p>
+</div>
+<div class="listingblock">
+<div class="title">Configuring renderer</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public JavascriptRenderer create() {
+  return JavascriptRendererConfigurator.instance()
+      .objectMapper(new ObjectMapper())
+      .classpathScript("/public/bundle.js")
+      .buildDevelopment();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With this the renderer is ready to be invoked within your code.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage"><a class="anchor" href="#_usage"></a>Usage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When invoking the renderer you have to provide two parameters.</p>
+</div>
+<div class="paragraph">
+<p>First represents the ID of the component / view to render. This way a single script can contain logic for many different cases.</p>
+</div>
+<div class="paragraph">
+<p>Second parameter contains the view model passed to the script. It can either be a literal String, in which case it will be passed as it, or it can a Java object which will be automatically converted to a JSON string.</p>
+</div>
+<div class="listingblock">
+<div class="title">Invoking renderer</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ClientCode {
+
+    private final JavascriptRenderer renderer;
+
+    public Mono&lt;String&gt; renderHelloWorld() {
+      return renderer.render("hello", "Mitchell");
+      // Mono will emit value "&lt;span&gt;Hello Mitchell!&lt;/span&gt;"
+    }
+
+    public Mono&lt;String&gt; renderWithCustomObject() {
+      HelloViewModel model = HelloViewModel.of("Mitchell");
+      // model will be transformed to JSON with ObjectMapper
+      return renderer.render("helloWithObject", model);
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_script_structure"><a class="anchor" href="#_script_structure"></a>Script structure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For Java code to be able to interact with Javascript code the script it must globally expose a function with the following signature.</p>
+</div>
+<div class="paragraph">
+<p><code>render(viewName: string, props: string): string</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>viewName - string identifying the component to render. The function should check this parameter and execute proper logic based on it.</p>
+</li>
+<li>
+<p>props - string representing value passed from Java as parameters. In most cases it will be a JSON string which can be converted to JS object in your code.</p>
+</li>
+<li>
+<p>returned value - string containing HTML markup</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Fortunately you don&#8217;t have to remmeber all that as there are npm packages doing all the work for you.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_graal_bridge"><a class="anchor" href="#_graal_bridge"></a>graal-bridge</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First add the <code>@wttech/graal-bridge</code> library to package.json.</p>
+</div>
+<div class="paragraph">
+<p>Then use it in your script in the following way.</p>
+</div>
+<div class="listingblock">
+<div class="title">graal-bridge</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">import GraalBridge from '@wttech/graal-bridge';
+
+// function treating props as a literal string
+function renderHelloWorld(props) {
+    const name = props ? props : 'World';
+    return "Hello " + name + "!";
+}
+
+// function treating props as a JSON string
+function renderWithJson(props) {
+    const parsed = JSON.parse(props);
+    const name = parsed.name ? parsed.name : 'World';
+    return "Hello " + name + "!";
+}
+
+// create a registry of functions
+const templating = new GraalBridge();
+// register a view / component of ID hello
+templating.register('hello', renderHelloWorld);
+// register a view / component of ID helloWithObject
+templating.register('helloWithObject', renderWithJson);
+// expose the render function as a global one
+templating.expose();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It works both in Javascript and Typescript context.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_development_and_production"><a class="anchor" href="#_development_and_production"></a>Development and production</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are two special methods for configuring Javascript renderer for development and production purposes.</p>
+</div>
+<div class="paragraph">
+<p><code>.buildProduction()</code> focuses on performance and should be used on the target environment where the script won&#8217;t change between server restarts.</p>
+</div>
+<div class="paragraph">
+<p><code>.buildDevelopment()</code> will create a renderer that will cache the script for 100ms (a single) and recompile the script only if it changes.
+These settings facilitate development but do not expect the best performance.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="projectSetup.html">Project setup</a></span>
+  <span class="next"><a href="react.html">React</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<script>
+  window.antora = window.antora || {}
+  window.antora.basePath = '../..'
+  window.antora.pagePath = '/renderer/0.1.0/javascriptRenderer.html'
+</script>
+<script src="../../_/js/site.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/search.js"></script>
+<script async src="../../_/../search-index.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
