@@ -1,4 +1,5 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     `java-library`
@@ -139,6 +140,8 @@ val slf4jVersion = "1.7.30"
 dependencies {
     // GraalVM JS module
     implementation("org.graalvm.sdk:graal-sdk:${graalVersion}")
+    implementation("org.graalvm.truffle:truffle-api:${graalVersion}")
+    implementation("org.graalvm.js:js:${graalVersion}")
     // Reactor
     api("io.projectreactor:reactor-core:${reactorVersion}")
     // Reactor Pool
@@ -164,8 +167,8 @@ tasks.withType<Test> {
         showExceptions = true
         showStackTraces = true
         events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.STANDARD_ERROR)
+        exceptionFormat = TestExceptionFormat.FULL
     }
-
 }
 
 tasks {
