@@ -4,6 +4,7 @@ plugins {
     `java-library`
     id("io.freefair.lombok")
     id("maven-publish")
+    id("com.moowork.node")
     id("com.github.hierynomus.license-report")
     signing
 }
@@ -25,10 +26,59 @@ java {
     withSourcesJar()
 }
 
+tasks.getByName<Delete>("clean") {
+    delete.add("src/main/js/bridge/node_modules")
+    delete.add("src/main/js/bridge/dist")
+    delete.add("src/main/js/bridge-react/node_modules")
+    delete.add("src/main/js/bridge-react/dist")
+}
+
 tasks.getByName<Javadoc>("javadoc") {
     if (JavaVersion.current().isJava9Compatible) {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
+}
+
+val installBridgeDependencies = tasks.register<com.moowork.gradle.node.npm.NpmTask>("installBridgeDependencies") {
+    description = "Installs dependencies from package.json for bridge"
+    group = "build"
+    setWorkingDir(file("src/main/js/bridge"))
+    setArgs(listOf("install"))
+    inputs.file("src/main/js/bridge/package.json")
+    outputs.dir("src/main/js/bridge/node_modules")
+}
+
+val installBridgeReactDependencies = tasks.register<com.moowork.gradle.node.npm.NpmTask>("installBridgeReactDependencies") {
+    description = "Installs dependencies from package.json for bridge-react"
+    group = "build"
+    setWorkingDir(file("src/main/js/bridge-react"))
+    setArgs(listOf("install"))
+    inputs.file("src/main/js/bridge-react/package.json")
+    outputs.dir("src/main/js/bridge-react/node_modules")
+}
+
+val buildBridge = tasks.register<com.moowork.gradle.node.npm.NpmTask>("buildBridge") {
+    dependsOn(installBridgeDependencies)
+    group = "build"
+    setWorkingDir(file("src/main/js/bridge"))
+    inputs.file("src/main/js/bridge/package.json")
+    inputs.dir("src/main/js/bridge/src")
+    outputs.dir("src/main/js/bridge/dist")
+    setArgs(listOf("run", "build"))
+}
+
+val buildBridgeReact = tasks.register<com.moowork.gradle.node.npm.NpmTask>("buildBridgeReact") {
+    dependsOn(installBridgeReactDependencies)
+    group = "build"
+    setWorkingDir(file("src/main/js/bridge-react"))
+    inputs.file("src/main/js/bridge-react/package.json")
+    inputs.dir("src/main/js/bridge-react/src")
+    outputs.dir("src/main/js/bridge-react/dist")
+    setArgs(listOf("run", "build"))
+}
+
+tasks.getByName("build") {
+    dependsOn(buildBridge, buildBridgeReact)
 }
 
 publishing {
