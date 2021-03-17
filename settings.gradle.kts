@@ -9,7 +9,7 @@ include("examples:spring-boot")
 
 pluginManagement {
     plugins {
-        id("pl.allegro.tech.build.axion-release") version "1.10.1"
+        id("pl.allegro.tech.build.axion-release") version "1.12.1"
         id("org.springframework.boot") version "2.4.1"
         id("io.freefair.lombok") version "4.1.6"
         id("com.moowork.node") version "1.3.1"
