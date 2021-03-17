@@ -45,6 +45,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12.20'
     - name: Local release
       run: ./gradlew :createRelease -Prelease.versionIncrementer=${{ env.releaseType }}
     - name: Verify build
@@ -52,4 +56,15 @@ jobs:
     - name: Push release to repository
       run: ./gradlew :pushRelease -Prelease.customUsername${{ secrets.GITHUB_TOKEN }}
     - name: Upload artifacts to Maven Central staging
-      run: ./gradlew publish -PsigningPassword=${{ secrets.MAVEN_KEY_PASS }} -PsigningKey=${{ secrets.MAVEN_KEY }} -PmavenCentralUsername=${{ secrets.OSSRH_USER }} -PmavenCentralPassword=${{ secrets.OSSRH_PASS }}
+      run: ./gradlew publish -PsigningPassword=${{ secrets.MAVEN_KEY_PASS }} -PsigningKey=${{ secrets.MAVEN_KEY }} -PsonatypeUsername=${{ secrets.OSSRH_USER }} -PsonatypePassword=${{ secrets.OSSRH_PASS }}
+    - name: Close and release staging repository
+      run: ./gradlew :closeAndReleaseStagingRepository -PsonatypeUsername=${{ secrets.OSSRH_USER }} -PsonatypePassword=${{ secrets.OSSRH_PASS }}
+    - name: Setup Node token
+      run: npm set //https://registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+    - name: Publish Bridge NPM package
+      working-directory: ./templating/src/main/js/bridge
+      run: npm publish
+    - name: Publish Bridge React NPM package
+      working-directory: ./templating/src/main/js/bridge-react
+      run: npm publish
+    
