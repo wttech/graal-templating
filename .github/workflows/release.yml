@@ -54,7 +54,7 @@ jobs:
     - name: Verify build
       run: ./gradlew build javadoc
     - name: Push release to repository
-      run: ./gradlew :pushRelease -Prelease.customUsername${{ secrets.GITHUB_TOKEN }}
+      run: ./gradlew :pushRelease -Prelease.customUsername=${{ secrets.GITHUB_USER }} -Prelease.customPassword=${{ secrets.GITHUB_TOKEN }}
     - name: Upload artifacts to Maven Central staging
       run: ./gradlew publish -PsigningPassword=${{ secrets.MAVEN_KEY_PASS }} -PsigningKey=${{ secrets.MAVEN_KEY }} -PsonatypeUsername=${{ secrets.OSSRH_USER }} -PsonatypePassword=${{ secrets.OSSRH_PASS }}
     - name: Close and release staging repository
