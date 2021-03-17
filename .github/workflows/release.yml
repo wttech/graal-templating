@@ -56,9 +56,7 @@ jobs:
     - name: Push release to repository
       run: ./gradlew :pushRelease -Prelease.customUsername="${{ secrets.REPO_USER }}" -Prelease.customPassword="${{ secrets.GITHUB_TOKEN }}"
     - name: Upload artifacts to Maven Central staging
-      run: ./gradlew publish -PsigningPassword="${{ secrets.MAVEN_KEY_PASS }}" -PsigningKey="${{ secrets.MAVEN_KEY }}" -PsonatypeUsername="${{ secrets.OSSRH_USER }}" -PsonatypePassword="${{ secrets.OSSRH_PASS }}"
-    - name: Close and release staging repository
-      run: ./gradlew :closeAndReleaseStagingRepository -PsonatypeUsername="${{ secrets.OSSRH_USER }}" -PsonatypePassword="${{ secrets.OSSRH_PASS }}"
+      run: ./gradlew publish :closeAndReleaseStagingRepository -PsigningPassword="${{ secrets.MAVEN_KEY_PASS }}" -PsigningKey="${{ secrets.MAVEN_KEY }}" -PsonatypeUsername="${{ secrets.OSSRH_USER }}" -PsonatypePassword="${{ secrets.OSSRH_PASS }}"
     - name: Setup Node token
       run: npm set //https://registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
     - name: Publish Bridge NPM package
