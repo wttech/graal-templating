@@ -18,7 +18,10 @@ configure<VersionConfig> {
     ))
     hooks.pre("fileUpdate", mutableMapOf(
             "files" to listOf("templating/src/main/js/bridge/package.json", "templating/src/main/js/bridge-react/package.json"),
-            "pattern" to KotlinClosure2<String, pl.allegro.tech.build.axion.release.domain.hooks.HookContext, String>({ _, _ -> "\"version\": \"(.*)\"" }),
+            "pattern" to KotlinClosure2<String, pl.allegro.tech.build.axion.release.domain.hooks.HookContext, String>({ _, c ->
+                c.addCommitPattern("templating/src/main/js/bridge/package.json")
+                c.addCommitPattern("templating/src/main/js/bridge-react/package.json")
+                "\"version\": \"(.*)\"" }),
             "replacement" to KotlinClosure2<String, pl.allegro.tech.build.axion.release.domain.hooks.HookContext, String>({ v, _ -> "\"version\": \"$v\"" })
     ))
     hooks.pre("commit")
