@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>React :: Graal templating reference</title>
-    <link rel="canonical" href="https://docs.demo.com/renderer/0.1.0/react.html">
-    <link rel="prev" href="javascriptRenderer.html">
-    <link rel="next" href="springBootIntegration.html">
+    <title>Spring Boot integration :: Graal templating reference</title>
+    <link rel="canonical" href="https://docs.demo.com/renderer/0.3.0/springBootIntegration.html">
+    <link rel="prev" href="react.html">
+    <link rel="next" href="javascriptRapidDevelopment.html">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="stylesheet" href="../../_/css/search.css">
@@ -32,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="renderer" data-version="0.1.0">
+<div class="nav-container" data-component="renderer" data-version="0.3.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -50,10 +50,10 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="javascriptRenderer.html">Javascript renderer</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="react.html">React</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="springBootIntegration.html">Spring Boot integration</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -67,14 +67,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Graal JS Renderer</span>
-    <span class="version">0.1.0</span>
+    <span class="version">0.3.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="index.html">Graal JS Renderer</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="index.html">0.1.0</a>
+          <a href="index.html">0.3.0</a>
         </li>
       </ul>
     </li>
@@ -90,72 +90,72 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Graal JS Renderer</a></li>
-    <li><a href="react.html">React</a></li>
+    <li><a href="springBootIntegration.html">Spring Boot integration</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/graal-templating/edit/main/templating/src/main/docs/antora/modules/ROOT/pages/react.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/graal-templating/edit/main/templating/src/main/docs/antora/modules/ROOT/pages/springBootIntegration.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">React</h1>
-<div class="sect1">
-<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
-<div class="sectionbody">
+<h1 class="page">Spring Boot integration</h1>
 <div class="paragraph">
-<p>While you can integrate JS Renderer with React on your own there&#8217;s already an npm package that can help you with that.</p>
+<p>Spring Boot starter provides the following features:</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_graal_bridge_react"><a class="anchor" href="#_graal_bridge_react"></a>graal-bridge-react</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>First add the <code>@wttech/graal-bridge-react</code> library to package.json.</p>
-</div>
-<div class="paragraph">
-<p>React is defined as a peer dependency so it&#8217;s best to specify your own version of the framework in package.json.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>JavascriptRendererSpringConfigurator</code> bean for setting up a new JavascriptRenderer instance.</p>
+</li>
+<li>
+<p>retrieving script source file from an external server using Spring WebClient</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The example below shows how to register React components as parts of the final render function.</p>
+<p>To include JS Renderer library in your Spring Boot application add the the following dependency.</p>
 </div>
 <div class="listingblock">
-<div class="title">graal-bridge-react</div>
+<div class="title">build.gradle.kts</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-jsx harmony hljs" data-lang="jsx harmony">import GraalBridge from 'graal-bridge-react';
-
-import DashboardComponent from './BashboardComponent.jsx';
-
-function HelloComponent(props) {
-  const name = props.name ? props.name : 'World';
-  return (
-    &lt;span&gt;Hello {name}!&lt;/span&gt;
-  );
-}
-
-// create a registry of functions
-const templating = new GraalBridge();
-// register a view / component of ID hello
-templating.register('hello', HelloComponent);
-// register a view / component of ID helloWithObject
-templating.register('dashboard', DashboardComponent);
-// expose the render function as a global one
-templating.expose();</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">dependencies {
+    implementation("io.wttech.graal.templating:templating-spring-boot-starter:0.3.0")
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Parameters passed to JS Renderer will always be treated as a JSON string and will be parsed before passing the object as the props parameter to the registered component.</p>
+<p>Maven</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;io.wttech.graal.templating&lt;/groupId&gt;
+    &lt;artifactId&gt;templating-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;0.3.0&lt;/version&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>It works both in Javascript and Typescript context.</p>
+<p>The example below shows how to configure renderer to read an external source file.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  @Bean
+  JavascriptRenderer javascriptRenderer(JavascriptRendererSpringConfigurator configurator, WebClient webClient) {
+    return configurator
+        .externalScript(builder -&gt; builder.webClient(webClient).uri(URI.create("http://localhost:3000/bundle.js")).build())
+        .buildDevelopment();
+  }</code></pre>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="javascriptRenderer.html">Javascript renderer</a></span>
-  <span class="next"><a href="springBootIntegration.html">Spring Boot integration</a></span>
+  <span class="prev"><a href="react.html">React</a></span>
+  <span class="next"><a href="javascriptRapidDevelopment.html">Rapid development with Javascript</a></span>
 </nav>
 </article>
   </div>
@@ -164,7 +164,7 @@ templating.expose();</code></pre>
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../..'
-  window.antora.pagePath = '/renderer/0.1.0/react.html'
+  window.antora.pagePath = '/renderer/0.3.0/springBootIntegration.html'
 </script>
 <script src="../../_/js/site.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>

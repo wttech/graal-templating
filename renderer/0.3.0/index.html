@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Rapid development with Javascript :: Graal templating reference</title>
-    <link rel="canonical" href="https://docs.demo.com/renderer/0.1.0/javascriptRapidDevelopment.html">
-    <link rel="prev" href="springBootIntegration.html">
+    <title>Intro :: Graal templating reference</title>
+    <link rel="canonical" href="https://docs.demo.com/renderer/0.3.0/index.html">
+    <link rel="next" href="projectSetup.html">
+    <meta name="description" content="Graal Templating documentation">
     <meta name="generator" content="Antora 2.3.4">
     <link rel="stylesheet" href="../../_/css/site.css">
 <link rel="stylesheet" href="../../_/css/search.css">
@@ -31,7 +32,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="renderer" data-version="0.1.0">
+<div class="nav-container" data-component="renderer" data-version="0.3.0">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -40,7 +41,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="index.html">Intro</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -55,7 +56,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="springBootIntegration.html">Spring Boot integration</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="javascriptRapidDevelopment.html">Rapid development with Javascript</a>
   </li>
 </ul>
@@ -66,14 +67,14 @@
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
     <span class="title">Graal JS Renderer</span>
-    <span class="version">0.1.0</span>
+    <span class="version">0.3.0</span>
   </div>
   <ul class="components">
     <li class="component is-current">
       <a class="title" href="index.html">Graal JS Renderer</a>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="index.html">0.1.0</a>
+          <a href="index.html">0.3.0</a>
         </li>
       </ul>
     </li>
@@ -85,62 +86,51 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link"></a>
+  <a href="index.html" class="home-link is-current"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Graal JS Renderer</a></li>
-    <li><a href="javascriptRapidDevelopment.html">Rapid development with Javascript</a></li>
+    <li><a href="index.html">Intro</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/wttech/graal-templating/edit/main/templating/src/main/docs/antora/modules/ROOT/pages/javascriptRapidDevelopment.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/wttech/graal-templating/edit/main/templating/src/main/docs/antora/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Rapid development with Javascript</h1>
-<div class="sect1">
-<h2 id="_general"><a class="anchor" href="#_general"></a>General</h2>
-<div class="sectionbody">
+<h1 class="page">Intro</h1>
 <div class="paragraph">
-<p>Javascript renderer can retrieve the script from the classpath as well as from an external server.</p>
+<p>Thanks to GraalVM we can now execute any JS script from within Java.</p>
 </div>
 <div class="paragraph">
-<p>We can use this feature together with <code>webpack</code> and <code>webpack-dev-server</code> to prepare a setup for rapid development of view logic.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_script_development"><a class="anchor" href="#_script_development"></a>Script development</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>First let&#8217;s define the Javascript renderer bean tailored for development.</p>
-</div>
-<div class="listingblock">
-<div class="title">SpringConfiguration.java</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
-  JavascriptRenderer javascriptRenderer(JavascriptRendererSpringConfigurator configurator, WebClient webClient) {
-    return configurator.externalScript(builder -&gt; builder.webClient(webClient).uri(URI.create("http://localhost:3000/bundle.js")).build())
-        .buildDevelopment();
-  }</code></pre>
-</div>
+<p>Javascript renderer takes advantage of that and enables you to generate HTML in Javascript using your favourite templating engine including but not limited to React.</p>
 </div>
 <div class="paragraph">
-<p>The second step is to setup webpack build and start the dev server.</p>
+<p>Features:</p>
 </div>
-<div class="paragraph">
-<p>The server starting command should look like this: <code>webpack-dev-server --open --no-inline</code>.
-<code>no-inline</code> parameter is important as otherwise <code>webpack</code> will inject not server side friendly code into the final JS bundle.</p>
-</div>
-<div class="paragraph">
-<p>The script will now be reloaded from webpack each time the JS renderer is invoked.</p>
-</div>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Retrieving source code from classpath or an external server</p>
+</li>
+<li>
+<p>Graal JS multithreading</p>
+</li>
+<li>
+<p>Source code caching and reloading</p>
+</li>
+<li>
+<p>Rapid development with webpack-dev-server</p>
+</li>
+<li>
+<p>Spring Boot integration</p>
+</li>
+</ul>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="springBootIntegration.html">Spring Boot integration</a></span>
+  <span class="next"><a href="projectSetup.html">Project setup</a></span>
 </nav>
 </article>
   </div>
@@ -149,7 +139,7 @@
 <script>
   window.antora = window.antora || {}
   window.antora.basePath = '../..'
-  window.antora.pagePath = '/renderer/0.1.0/javascriptRapidDevelopment.html'
+  window.antora.pagePath = '/renderer/0.3.0/index.html'
 </script>
 <script src="../../_/js/site.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
