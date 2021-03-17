@@ -14,6 +14,7 @@ pluginManagement {
         id("io.freefair.lombok") version "4.1.6"
         id("com.moowork.node") version "1.3.1"
         id("com.github.hierynomus.license-report") version "0.15.0"
+        id("io.github.gradle-nexus.publish-plugin") version "1.0.0"
     }
 }
 

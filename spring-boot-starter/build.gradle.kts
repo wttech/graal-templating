@@ -45,16 +45,6 @@ publishing {
                 }
             }
 
-            repositories {
-                maven {
-                    name = "mavenCentral"
-                    val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                    val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots"
-                    url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
-                    credentials(PasswordCredentials::class)
-                }
-            }
-
             pom {
                 name.set("Graal templating engine Spring Boot starter")
                 description.set("Spring Boot integration for Graal templating")
