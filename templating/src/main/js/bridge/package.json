@@ -1,7 +1,7 @@
 {
   "name": "@wttech/graal-bridge",
   "description": "Javascript entrypoint for Graal integration",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "./dist/graal-bridge.js",
   "types": "./dist/graal-bridge.d.ts",
   "files": [
