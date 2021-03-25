@@ -1,7 +1,7 @@
 {
   "name": "@wttech/graal-bridge-react",
   "description": "React entrypoint for Graal integration",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "./dist/graal-bridge-react.js",
   "types": "./dist/graal-bridge-react.d.ts",
   "files": [
