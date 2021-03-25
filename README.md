@@ -1,5 +1,7 @@
 # Graal Javascript Renderer
 
+[![javadoc](https://javadoc.io/badge2/io.wttech.graal.templating/templating/javadoc.svg)](https://javadoc.io/doc/io.wttech.graal.templating/templating)
+
 Library providing a full pipeline for extracting, caching and executing Javascript source code on Graal for markup generation purposes.
 
 ## Documentation
