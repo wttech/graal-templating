@@ -4,3 +4,4 @@
 * xref:react.adoc[]
 * xref:springBootIntegration.adoc[]
 * xref:javascriptRapidDevelopment.adoc[]
+* https://javadoc.io/doc/io.wttech.graal.templating/templating/{page-version}[Javadoc]
