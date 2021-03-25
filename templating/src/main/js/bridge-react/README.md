@@ -1,6 +1,6 @@
 # Graal Javascript renderer
 
-Javascript execution entrypoint with React support..
+Javascript execution entrypoint with React support.
 
 ## Usage
 
@@ -25,8 +25,10 @@ import ComponentB from 'ComponentB';
 const templating = new TemplatingBridge();
 
 // register React components
+// render ComponentA with additional markup for rehydration
 templating.registerReact('componentA', ComponentA);
-templating.registerReact('componentB', ComponentB);
+// render ComponentB without the additional markup
+templating.registerReactStatic('componentB', ComponentB);
 
 // exposse the render function to be invoked by the Markuply engine
 templating.expose();

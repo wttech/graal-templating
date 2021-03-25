@@ -12,6 +12,13 @@ function renderComponent(componentType: ComponentType<any>) {
   }
 }
 
+function renderStaticComponent(componentType: ComponentType<any>) {
+  return (props: string) => {
+    let value = JSON.parse(props);
+    return ReactDOMServer.renderToStaticMarkup(React.createElement(componentType, value));
+  }
+}
+
 export default class GraalBridgeReact {
 
   private readonly registry: Registry;
@@ -26,6 +33,10 @@ export default class GraalBridgeReact {
 
   registerReact(name: string, componentType: ComponentType<any>) {
     this.register(name, renderComponent(componentType));
+  }
+
+  registerReactStatic(name: string, componentType: ComponentType<any>) {
+    this.register(name, renderStaticComponent(componentType));
   }
 
   render(name: string, props: string): string {

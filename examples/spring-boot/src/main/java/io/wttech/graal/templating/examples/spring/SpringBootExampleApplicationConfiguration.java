@@ -18,6 +18,7 @@ import java.net.URI;
 public class SpringBootExampleApplicationConfiguration {
 
   private static final String SCRIPT_LOCATION = "localhost:8080/assets/bundle.js";
+  private static final int RESPONSE_SIZE_LIMIT = 16 * 1024 * 1024;
 
   @Bean
   WebClient webClient() {
@@ -25,7 +26,7 @@ public class SpringBootExampleApplicationConfiguration {
         .exchangeStrategies(ExchangeStrategies.builder()
           .codecs(configurer -> configurer
               .defaultCodecs()
-              .maxInMemorySize(16 * 1024 * 1024))
+              .maxInMemorySize(RESPONSE_SIZE_LIMIT))
           .build())
         .build();
   }
