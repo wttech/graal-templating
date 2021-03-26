@@ -1,6 +1,6 @@
 site:
   title: Graal Templating reference
-  url: https://io.github.com/wttech/graal-templating
+  url: https://wttech.github.io/graal-templating
   start_page: renderer::index.adoc
 content:
   sources:
